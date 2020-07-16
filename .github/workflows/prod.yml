@@ -14,13 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # check out repository code and setup node
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+
+      - name: set ENV
+          run: |
+            echo $GITHUB_WORKSPACE
+            echo ::set-env name=PROJECT_DIR::"$GITHUB_WORKSPACE/semantic-release-Demo"
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
       # install dependencies and run semantic-release
       - run: |
-          echo ::set-env name=PROJECT_DIR::"$GITHUB_WORKSPACE/semantic-release-Demo"
           echo "Got the config path"
           echo $PROJECT_DIR
           npx semantic-release@17 --extends $PROJECT_DIR/.github/workflows/release.config.js
