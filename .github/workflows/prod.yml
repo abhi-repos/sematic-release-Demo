@@ -7,7 +7,7 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
-  CONFIG_PATH: ''
+  PROJECT_DIR: ''
 jobs:
   release:
     name: release
@@ -20,10 +20,10 @@ jobs:
           node-version: "12.x"
       # install dependencies and run semantic-release
       - run: |
-          echo ::set-env name=CONFIG_PATH::$(pwd)
+          echo ::set-env name=PROJECT_DIR::"$GITHUB_WORKSPACE/semantic-release-Demo"
           echo "Got the config path"
-          echo $CONFIG_PATH
-          npx semantic-release@17 --extends $CONFIG_PATH/release.config.js
+          echo $PROJECT_DIR
+          npx semantic-release@17 --extends $PROJECT_DIR/.github/workflows/release.config.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
