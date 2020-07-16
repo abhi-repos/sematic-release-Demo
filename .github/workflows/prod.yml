@@ -16,9 +16,9 @@ jobs:
           node-version: "12.x"
       # install dependencies and run semantic-release
       - run: |
-          echo ::set-env name=PATH::$(pwd)
-          echo $PATH
-          npx semantic-release@17 --extends $PATH/release.config.js
+          echo ::set-env name=CONFIG_PATH::$(pwd)
+          echo $CONFIG_PATH
+          npx semantic-release@17 --extends $CONFIG_PATH/release.config.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
