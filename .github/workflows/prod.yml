@@ -4,6 +4,10 @@ on:
     branches:
       - hotfix
 
+
+env:
+  # TODO: Change variable to your image's name.
+  CONFIG_PATH: ''
 jobs:
   release:
     name: release
@@ -17,6 +21,7 @@ jobs:
       # install dependencies and run semantic-release
       - run: |
           echo ::set-env name=CONFIG_PATH::$(pwd)
+          echo "Got the config path"
           echo $CONFIG_PATH
           npx semantic-release@17 --extends $CONFIG_PATH/release.config.js
         env:
