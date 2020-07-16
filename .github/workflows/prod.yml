@@ -17,9 +17,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: set ENV
-          run: |
-            echo $GITHUB_WORKSPACE
-            echo ::set-env name=PROJECT_DIR::"$GITHUB_WORKSPACE/semantic-release-Demo"
+        run: |
+          echo $GITHUB_WORKSPACE
+          echo ::set-env name=PROJECT_DIR::"$GITHUB_WORKSPACE/semantic-release-Demo"
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
