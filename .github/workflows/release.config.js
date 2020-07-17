@@ -1,5 +1,4 @@
 module.exports = {
-    debug: true,
     branches: [
         "master",
         "next",
