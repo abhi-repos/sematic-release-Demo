@@ -28,18 +28,9 @@ jobs:
           echo $PROJECT_DIR
           echo ::set-env name=VERSION::$(npx semantic-release@17 -p @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github --extends $PROJECT_DIR/.github/workflows/release.config.js | grep "Created tag" | awk  '{print $8}')
           echo $VERSION
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Test
-        run: |
-          echo $VERSION
-          echo ${{ env.VERSION }}
