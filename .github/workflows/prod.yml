@@ -28,6 +28,11 @@ jobs:
 
       - uses: actions/checkout@v2
       - name: Test
-        run: echo $VERSION
+        run: |
+          if [ $VERSION = '' ]
+          then
+              VERSION=${GITHUB_SHA:0:7}
+          fi
+          echo $VERSION
 
 
