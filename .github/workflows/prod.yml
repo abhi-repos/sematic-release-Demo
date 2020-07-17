@@ -6,7 +6,7 @@ on:
 env:
   # TODO: Change variable to your image's name.
   PROJECT_DIR: ''
-  VERSION: v0.0.0
+
 jobs:
   release:
     name: release
@@ -26,8 +26,8 @@ jobs:
       - run: |
           echo "Got the config path"
           echo $PROJECT_DIR
-          npx semantic-release@17 -p @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github --extends $PROJECT_DIR/.github/workflows/release.config.js | grep "Created tag" | awk  '{print $8}'
-          echo $VERSION
+          echo ::set-env name=VERSION::$(npx semantic-release@17 -p @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github --extends $PROJECT_DIR/.github/workflows/release.config.js | grep "Created tag" | awk  '{print $8}')
+          echo ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
