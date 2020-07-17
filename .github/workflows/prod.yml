@@ -8,6 +8,8 @@ jobs:
   release:
     name: release
     runs-on: ubuntu-latest
+    outputs:
+      package_version: ${{ steps.version.outputs.VERSION }}
     steps:
       # check out repository code and setup node
       - uses: actions/checkout@v2
@@ -20,8 +22,9 @@ jobs:
         with:
           node-version: "12.x"
       # install dependencies and run semantic-release
-      - run: |
-          echo ::set-env name=VERSION::$(npx semantic-release@17 -p @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github --extends $PROJECT_DIR/.github/workflows/release.config.js | grep "Created tag" | awk  '{print $8}')
+      - id: version
+        name: Semantic-Versioning
+        run: echo ::set-output name=VERSION::$(npx semantic-release@17 -p @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github --extends $PROJECT_DIR/.github/workflows/release.config.js | grep "Created tag" | awk  '{print $8}')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -36,3 +39,12 @@ jobs:
           echo $VERSION
 
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test
+        run: |
+          echo "GEtting version"
+          echo $VERSION
+          echo ${{needs.release.outputs.package_version}}
