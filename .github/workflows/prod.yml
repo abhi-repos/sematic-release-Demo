@@ -13,7 +13,6 @@ jobs:
     steps:
       # check out repository code and setup node
       - uses: actions/checkout@v2
-
       - name: set ENV
         run: |
           echo $GITHUB_WORKSPACE
@@ -22,17 +21,17 @@ jobs:
         with:
           node-version: "12.x"
       # install dependencies and run semantic-release
-      - id: version
-        name: Semantic-Versioning
+      - name: Semantic-Versioning
+        id: version
         run: echo ::set-output name=VERSION::$(npx semantic-release@17 -p @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github --extends $PROJECT_DIR/.github/workflows/release.config.js | grep "Created tag" | awk  '{print $8}')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-
       - uses: actions/checkout@v2
       - name: Test
         run: |
+          VERSION = ${{ steps.version.outputs.VERSION }}
           if [[ $VERSION = "" ]]; then
               VERSION=${GITHUB_SHA:0:7}
           fi
@@ -40,6 +39,7 @@ jobs:
 
 
   test:
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
