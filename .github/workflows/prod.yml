@@ -33,7 +33,7 @@ jobs:
         run: |
           TAG = ${{ steps.version.outputs.VERSION }}
           if [[ $TAG = "" ]]; then
-              TAG = ${GITHUB_SHA:0:7}
+              TAG=${GITHUB_SHA:0:7}
           fi
           echo $TAG
 
