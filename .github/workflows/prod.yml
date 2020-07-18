@@ -4,6 +4,7 @@ on:
     branches:
       - hotfix
 
+
 jobs:
   release:
     name: release
