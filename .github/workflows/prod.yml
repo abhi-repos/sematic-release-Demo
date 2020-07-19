@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - hotfix
-
-
 jobs:
   release:
     name: release
@@ -37,8 +35,6 @@ jobs:
               TAG=${GITHUB_SHA:0:7}
           fi
           echo $TAG
-
-
   test:
     needs: release
     runs-on: ubuntu-latest
